@@ -91,7 +91,8 @@ public class MyList<T> implements MyListInterface {
 
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        c.forEach(item -> add(item));
+        return true;
     }
 
     @Override
@@ -106,7 +107,11 @@ public class MyList<T> implements MyListInterface {
 
     @Override
     public int hashCode() {
-        return 0;
+        int sum = 0;
+        for(T item: list) {
+            sum += item.hashCode();
+        }
+        return sum + list.length;
     }
 
     @Override
