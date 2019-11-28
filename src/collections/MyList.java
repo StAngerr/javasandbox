@@ -55,25 +55,16 @@ public class MyList<T> implements MyListInterface<T> {
     }
 
     @Override
-    public void forEach(Consumer action) {
-
+    public void forEach(Consumer<? super T> action) {
+        for (Object item: list) {
+            action.accept((T) item);
+        }
     }
 
     @Override
     public Object[] toArray() {
         return list.clone();
     }
-
-    // returns false in case if collection not allows to store duplicated elements (Set)
-//    @Override
-//    public boolean add(Object o) {
-//        list[currentIndex] = (T) o;
-//        currentIndex += 1;
-//        if (list.length - 1 == currentIndex) {
-//            doubleCollection();
-//        }
-//        return true;
-//    }
 
     public boolean add(T o) {
         list[currentIndex] = o;
@@ -83,6 +74,11 @@ public class MyList<T> implements MyListInterface<T> {
             expandCollection();
         }
         return true;
+    }
+
+    @Override
+    public Array getAll() {
+        return null;
     }
 
 
@@ -100,7 +96,7 @@ public class MyList<T> implements MyListInterface<T> {
 
     public int indexOf(Object o) {
         for (int i = 0; i < list.length; i++) {
-            if (list[i].equals(o)) {
+            if (list[i] != null && list[i].equals(o)) {
                 return i;
             }
         }
@@ -135,10 +131,9 @@ public class MyList<T> implements MyListInterface<T> {
     @Override
     public boolean retainAll(Collection c) {
         Object[] result = (T[]) new Object[list.length];
-        Object[] collectionAr = c.toArray();
         int index = 0;
         for (Object item : list) {
-            if (arrayContains(collectionAr, item)) {
+            if (this.contains(item)) {
                 result[index++] = item;
             }
         }
@@ -147,31 +142,22 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        Object[] collectionArray = c.toArray();
-        Object[] itemsToRemove =  new Object[c.size()];
-        int index = 0;
-        for (Object item : list) {
-            if (arrayContains(collectionArray, item)) {
-                itemsToRemove[index] = item;
-                index++;
+        c.forEach(o -> {
+            if(this.contains(o)) {
+                remove(o);
             }
-        }
-        for (Object item : itemsToRemove) {
-            remove(item);
-        }
-        return itemsToRemove.length > 0;
+        });
+        return true;
     }
 
     @Override
     public boolean containsAll(Collection c) {
-        int total = c.size();
-        Object[] collectionArray = c.toArray();
         for (Object item : list) {
-            if (arrayContains(collectionArray, item)) {
-                total--;
+            if (!this.contains(item)) {
+                return false;
             }
         }
-        return total == 0;
+        return true;
     }
 
     @Override
@@ -181,7 +167,7 @@ public class MyList<T> implements MyListInterface<T> {
 
     private boolean arrayContains(Object[] ar, Object value) {
         for (Object element : ar) {
-            if (element.equals(value)) {
+            if (element != null && element.equals(value)) {
                 return true;
             }
         }
@@ -189,17 +175,12 @@ public class MyList<T> implements MyListInterface<T> {
     }
 
     @Override
-    public Array getAll() {
-        return null;
-    }
-
-    @Override
     public Optional getIf(Predicate filter) {
-//        for (T item : list) {
-//            if (filter.test(item)) {
-//                return Optional.of(item);
-//            }
-//        }
+        for (Object item : list) {
+            if (filter.test(item)) {
+                return Optional.of(item);
+            }
+        }
         return Optional.empty();
     }
 
@@ -216,9 +197,9 @@ public class MyList<T> implements MyListInterface<T> {
 
     private void doubleCollection() {
         int currentLength = list.length;
-        T[] extended = (T[]) new Object[currentLength * 2];
+        Object[] extended = new Object[currentLength * 2];
         for (int i = 0; i < list.length; i ++ ) {
-            // extended[i] = list[i];
+            extended[i] = list[i];
         }
         list = extended;
     }
@@ -234,8 +215,10 @@ public class MyList<T> implements MyListInterface<T> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for(Object item : list) {
-            res.append(item).append(" ");
+        int i = 0;
+        while(i != currentIndex) {
+            res.append(" ").append(list[i]).append(" |");
+            i++;
         }
         return res.toString();
     }

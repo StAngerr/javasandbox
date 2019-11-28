@@ -41,30 +41,20 @@ public class Main {
 
         ArrayList<User> arTest = new ArrayList<>();
 
-        arTest.add(user1);
-        System.out.println(arTest.size());
-
-        arTest.add(null);
-        System.out.println(arTest.size());
-
-        arTest.add(user2);
-        System.out.println(arTest.size());
-
-
-        arTest.add(null);
-        System.out.println(arTest.size());
-
-
-        System.out.println(arTest.contains(null));
-
-
-
-
-       MyList<Integer> test = new MyList<Integer>();
+       MyList<User> test = new MyList<User>();
         test.add(null);
         test.add(user1);
+        test.add(user2);
+        test.add(user3);
+        test.add(user4);
+        test.add(user5);
 
-        System.out.println(test.contains(user1));
+        System.out.println(test);
+        MyList<User> remove = new MyList<>();
+        remove.add(user3);
+        remove.add(user4);
+        test.removeAll(remove);
+        System.out.println(test);
 
                 /// System.out.println(test);
 
