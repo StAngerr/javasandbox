@@ -5,42 +5,44 @@ import collections.interfaces.MyListInterface;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class MyList<T> implements MyListInterface {
-    public T[] getList() {
-        return list;
-    }
-
-    private T[] list;
+/*
+*  T - should be object.
+* */
+public class MyList<T> implements MyListInterface<T> {
+    private Object[] list;
     private int currentIndex;
+
+    public MyList(int initialCapacity) {
+        super();
+        list = new Object[initialCapacity];
+        currentIndex = 0;
+    }
 
     public MyList() {
         super();
-        list = (T[]) new Object[10];
+        list = new Object[10];
         currentIndex = 0;
     }
 
     @Override
     public int size() {
-        int size = 0;
-        for (int i = list.length - 1; i > 0; i--) {
-            if (list[i] != null) {
-                size++;
-            }
-        }
-        return size;
+        return currentIndex + 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return list != null && list.length == 0;
+        return currentIndex == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        for (int i = 0; i < list.length; i++) {
-            if (o.equals(list[i])) {
+        for (int i = 0; i <= currentIndex; i++) {
+            if (o == null && list[i] == null) {
+                return true;
+            } else if (o.equals(list[i])) {
                 return true;
             }
         }
@@ -53,20 +55,36 @@ public class MyList<T> implements MyListInterface {
     }
 
     @Override
+    public void forEach(Consumer action) {
+
+    }
+
+    @Override
     public Object[] toArray() {
-        return (T[]) list.clone();
+        return list.clone();
     }
 
     // returns false in case if collection not allows to store duplicated elements (Set)
-    @Override
-    public boolean add(Object o) {
-        list[currentIndex] = (T) o;
+//    @Override
+//    public boolean add(Object o) {
+//        list[currentIndex] = (T) o;
+//        currentIndex += 1;
+//        if (list.length - 1 == currentIndex) {
+//            doubleCollection();
+//        }
+//        return true;
+//    }
+
+    public boolean add(T o) {
+        list[currentIndex] = o;
         currentIndex += 1;
         if (list.length - 1 == currentIndex) {
-            doubleCollection();
+            // doubleCollection();
+            expandCollection();
         }
         return true;
     }
+
 
     @Override
     public boolean remove(Object o) {
@@ -83,21 +101,21 @@ public class MyList<T> implements MyListInterface {
     public int indexOf(Object o) {
         for (int i = 0; i < list.length; i++) {
             if (list[i].equals(o)) {
-                return 0;
+                return i;
             }
         }
         return -1;
     }
 
     @Override
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<? extends T> c) {
         c.forEach(item -> add(item));
         return true;
     }
 
     @Override
     public void clear() {
-        list = (T[]) new Object [list.length];
+        list = new Object [list.length];
     }
 
     @Override
@@ -108,7 +126,7 @@ public class MyList<T> implements MyListInterface {
     @Override
     public int hashCode() {
         int sum = 0;
-        for(T item: list) {
+        for(Object item: list) {
             sum += item.hashCode();
         }
         return sum + list.length;
@@ -116,10 +134,10 @@ public class MyList<T> implements MyListInterface {
 
     @Override
     public boolean retainAll(Collection c) {
-        T[] result = (T[]) new Object[list.length];
+        Object[] result = (T[]) new Object[list.length];
         Object[] collectionAr = c.toArray();
         int index = 0;
-        for (T item : list) {
+        for (Object item : list) {
             if (arrayContains(collectionAr, item)) {
                 result[index++] = item;
             }
@@ -128,17 +146,17 @@ public class MyList<T> implements MyListInterface {
     }
 
     @Override
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<?> c) {
         Object[] collectionArray = c.toArray();
-        T[] itemsToRemove = (T[]) new Object[c.size()];
+        Object[] itemsToRemove =  new Object[c.size()];
         int index = 0;
-        for (T item : list) {
+        for (Object item : list) {
             if (arrayContains(collectionArray, item)) {
                 itemsToRemove[index] = item;
                 index++;
             }
         }
-        for (T item : itemsToRemove) {
+        for (Object item : itemsToRemove) {
             remove(item);
         }
         return itemsToRemove.length > 0;
@@ -148,8 +166,8 @@ public class MyList<T> implements MyListInterface {
     public boolean containsAll(Collection c) {
         int total = c.size();
         Object[] collectionArray = c.toArray();
-        for (T t : list) {
-            if (arrayContains(collectionArray, t)) {
+        for (Object item : list) {
+            if (arrayContains(collectionArray, item)) {
                 total--;
             }
         }
@@ -177,18 +195,18 @@ public class MyList<T> implements MyListInterface {
 
     @Override
     public Optional getIf(Predicate filter) {
-        for (T item : list) {
-            if (filter.test(item)) {
-                return Optional.of(item);
-            }
-        }
+//        for (T item : list) {
+//            if (filter.test(item)) {
+//                return Optional.of(item);
+//            }
+//        }
         return Optional.empty();
     }
 
     @Override
-    public boolean addIf(Predicate filter, Object value) {
-        for (T item : list) {
-            if (filter.test(item)) {
+    public boolean addIf(Predicate<T> filter, T value) {
+        for (Object item : list) {
+            if (filter.test((T) item)) {
                 add(value);
                 return true;
             }
@@ -200,15 +218,23 @@ public class MyList<T> implements MyListInterface {
         int currentLength = list.length;
         T[] extended = (T[]) new Object[currentLength * 2];
         for (int i = 0; i < list.length; i ++ ) {
-            extended[i] = list[i];
+            // extended[i] = list[i];
         }
         list = extended;
+    }
+
+    private void expandCollection() {
+        Object[] expanded =  new Object[list.length + 1];
+        for (int i = 0; i < list.length; i++) {
+            expanded[i] = list[i];
+        }
+        list = expanded;
     }
 
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for(T item : list) {
+        for(Object item : list) {
             res.append(item).append(" ");
         }
         return res.toString();

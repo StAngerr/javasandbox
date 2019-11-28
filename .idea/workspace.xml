@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37dcadfd-6150-4b2f-aec8-ed6e74d499ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/javasandbox/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/javasandbox/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/javasandbox/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/javasandbox/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/javasandbox/collections/MyList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/javasandbox/collections/MyList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/collections/MyList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collections/MyList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/collections/interfaces/MyListInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collections/interfaces/MyListInterface.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,31 +102,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/collections/MyList.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/collections/MyList.java</url>
-          <line>140</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/collections/MyList.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,7 +1,6 @@
 import collections.MyList;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 class User {
     String name;
@@ -40,7 +39,36 @@ public class Main {
         test1.add(user7);
         test1.add(user6);
 
-        System.out.println(test1.getIf((Object item) -> ((User) item).name == "sdsds Brusket").get());
+        ArrayList<User> arTest = new ArrayList<>();
+
+        arTest.add(user1);
+        System.out.println(arTest.size());
+
+        arTest.add(null);
+        System.out.println(arTest.size());
+
+        arTest.add(user2);
+        System.out.println(arTest.size());
+
+
+        arTest.add(null);
+        System.out.println(arTest.size());
+
+
+        System.out.println(arTest.contains(null));
+
+
+
+
+       MyList<Integer> test = new MyList<Integer>();
+        test.add(null);
+        test.add(user1);
+
+        System.out.println(test.contains(user1));
+
+                /// System.out.println(test);
+
+        // System.out.println(test1.getIf((Object item) -> ((User) item).name == "sdsds Brusket").get());
 
 //        System.out.println(test1.size());
 //        System.out.println(test1.removeAll(other));
