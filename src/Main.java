@@ -38,42 +38,33 @@ public class Main {
         test1.add(user5);
         test1.add(user7);
         test1.add(user6);
-
-        ArrayList<User> arTest = new ArrayList<>();
-
-       MyList<User> test = new MyList<User>();
-        test.add(null);
-        test.add(user1);
-        test.add(user2);
-        test.add(user3);
-        test.add(user4);
-        test.add(user5);
-
-        System.out.println(test);
-        MyList<User> remove = new MyList<>();
-        remove.add(user3);
-        remove.add(user4);
-        test.removeAll(remove);
-        System.out.println(test);
-
-                /// System.out.println(test);
-
-        // System.out.println(test1.getIf((Object item) -> ((User) item).name == "sdsds Brusket").get());
-
-//        System.out.println(test1.size());
-//        System.out.println(test1.removeAll(other));
-//        System.out.println(test1.size());
-        // System.out.println(user1.hashCode());
-        // System.out.println(user6.hashCode());
-//        int[] ar = new int[10];
-//        int index = 0;
-//        ar[index++] = 10;
-//        System.out.println(ar[0]);
-//        System.out.println(index);
-//        ar[index++] = 40;
-//        System.out.println(ar[1]);
-//        System.out.println(index);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        test1.add(user6);
+        checkPerformance();
+        // int[] ar = new int[Integer.MAX_VALUE - 5];
+     }
 
 
+     public static void checkPerformance() {
+        long start = System.currentTimeMillis();
+        MyList<Object> test = new MyList<>();
+        // Integer.MAX_VALUE - 10
+        for (int i = 0; i < 100000; i++) {
+            test.add(new Object());
+        }
+        System.out.println("Performance result: " + (System.currentTimeMillis() - start));
      }
 }

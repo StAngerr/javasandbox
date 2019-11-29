@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 * */
 public class MyList<T> implements MyListInterface<T> {
     private Object[] list;
+    private final int arrayMaxValue = Integer.MAX_VALUE - 5;
     private int currentIndex;
 
     public MyList(int initialCapacity) {
@@ -165,15 +166,6 @@ public class MyList<T> implements MyListInterface<T> {
         return list.clone();
     }
 
-    private boolean arrayContains(Object[] ar, Object value) {
-        for (Object element : ar) {
-            if (element != null && element.equals(value)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public Optional getIf(Predicate filter) {
         for (Object item : list) {
@@ -197,7 +189,18 @@ public class MyList<T> implements MyListInterface<T> {
 
     private void doubleCollection() {
         int currentLength = list.length;
-        Object[] extended = new Object[currentLength * 2];
+        int newSize = currentLength * 2;
+        Object[] extended;
+        // if current array length is of max value
+        if (currentLength == arrayMaxValue) {
+            return;
+        }
+        // if new size exceeds max value and current array length is not max size
+        else if (newSize > arrayMaxValue) {
+            extended = new Object[arrayMaxValue];
+        } else {
+            extended = new Object[newSize];
+        }
         for (int i = 0; i < list.length; i ++ ) {
             extended[i] = list[i];
         }
