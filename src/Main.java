@@ -29,38 +29,21 @@ public class Main {
     private static int tests = 0;
     private static List<String> failedMessages = new ArrayList<>();
     public static void main(String[] args) {
-        User user1 = new User("Rick", 3);
-        User user2 = new User("Tom", 2);
-        User user3 = new User("Jack", 1);
-        User user4 = new User("test", 5);
-        User user5 = new User("Fuck ", 22);
-        User user6 = new User("Rick ", 4);
-        User user7 = new User("Irynka Brusket", 1);
-
-        MyList test1 = new MyList();
-        test1.add(user1);
-        test1.add(user2);
-        test1.add(user3);
-        test1.add(user4);
-        test1.add(user5);
-        test1.add(user6);
-        test1.add(user7);
-        System.out.println(test1.toArray().length);
-        // testSizeMethod(test1, user4);
-        // testIsEmptyMethod(test1);
-        // testContainsMethod(test1, user3, user4);
-        // testIteratorMethod(test1);
-        // testToArray(test1);
-        // testAddMethod();
-        // testRemoveMethod(test1, user1,user6);
-        // testIndexOfMethod(test1, user1, user2);
-        // testAddAllMethod();
-        // testClearMethod();
-        //testHashCode();
-        // testRetainAllMethod();
-        // testRemoveAll();
-        // testContainsAll();
-        // testCloneMethod();
+        testSizeMethod();
+        testIsEmptyMethod();
+        testContainsMethod();
+        testIteratorMethod();
+        testToArray();
+        testAddMethod();
+        testRemoveMethod();
+        testIndexOfMethod();
+        testAddAllMethod();
+        testClearMethod();
+        testHashCode();
+        testRetainAllMethod();
+        testRemoveAll();
+        testContainsAll();
+        testCloneMethod();
         printTestResults();
     }
 
@@ -174,15 +157,29 @@ public class Main {
         check(basic, MyList::size, 3, "Size should not be changed if adding empty list");
     }
 
-    private static void testIndexOfMethod(MyList test1, User one, User two) {
-        check(test1, (list) -> list.indexOf(one), 0, "1Should return proper index.");
-        check(test1, (list) -> list.indexOf(two), 1, "2Should return proper index.");
+    private static void testIndexOfMethod() {
+        MyList test1 = new MyList();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        test1.add(user1);
+        test1.add(user2);
+        test1.add(user3);
+        check(test1, (list) -> list.indexOf(user1), 0, "1Should return proper index.");
+        check(test1, (list) -> list.indexOf(user3), 2, "2Should return proper index.");
         check(test1, (list) -> list.indexOf(new User("sadas", 1111)), -1, "Should negative one if no such user in collection.");
     }
 
-    private static void testRemoveMethod(MyList test1, User one, User two) {
+    private static void testRemoveMethod() {
+        MyList test1 = new MyList();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        test1.add(user1);
+        test1.add(user2);
+        test1.add(user3);
         int startSize = test1.size();
-        check(test1, (list) -> list.remove(one), true, "Should remove user from collection.");
+        check(test1, (list) -> list.remove(user1), true, "Should remove user from collection.");
         check(test1, MyList::size, startSize - 1, "After remove size should be decreased.");
         check(test1, (list) -> list.remove(new User("asdsadasdas", 232131)), false, "Should not remove item if it is not exist in collection.");
         check(test1,MyList::size, startSize - 1, "Size should be the same, if removing item not exist in collection.");
@@ -208,7 +205,14 @@ public class Main {
         check(list1, MyList::size, 13, "Should dynamically change list size when new items are added");
     }
 
-    private static void testToArray(MyList test1) {
+    private static void testToArray() {
+        MyList test1 = new MyList();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        test1.add(user1);
+        test1.add(user2);
+        test1.add(user3);
         check(test1, (list) -> list.toArray().length, test1.size(), "Returning array size should be equal to collection size");
         check(new MyList(), (list) -> list.toArray().length, 0, "Returning array size should be 0 if empty collection");
 
@@ -223,7 +227,8 @@ public class Main {
 //        }, 38, "forEach should collect sum of all age.");
     }
 
-    private static void testIteratorMethod(MyList test1) {
+    private static void testIteratorMethod() {
+        MyList test1 = new MyList();
         Iterator iterator = test1.iterator();
         if (!(iterator instanceof Iterator)) {
             failedMessages.add("Returning type should be instance of Iterator class");
@@ -231,29 +236,86 @@ public class Main {
         tests++;
     }
 
-    private static void testContainsMethod(MyList col, User one, User two) {
-        check(col, (list) -> list.contains(one), true, "Should return TRUE for user that exist in collection.");
+    private static void testContainsMethod() {
+        MyList col = new MyList();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        col.add(user1);
+        col.add(user2);
+        col.add(user3);
+        check(col, (list) -> list.contains(user1), true, "Should return TRUE for user that exist in collection.");
         check(col, (list) -> list.contains(new User("tese", 22)), false, "Should return FALSE for not existing user in collection.");
         check(col, (list) -> list.contains(null), false, "Should return FALSE for null if no null in collection.");
         col.add(null);
         check(col, (list) -> list.contains(null), true, "Should return TRUE for null if null exist in collection.");
     }
 
-    private static void testIsEmptyMethod(MyList test) {
+    private static void testIsEmptyMethod() {
+        MyList test = new MyList();
+        User user1 = new User("Rick", 3);
+        test.add(user1);
         check(new MyList(), MyList::isEmpty, true, "Should return TRUE for empty list.");
         check(test, MyList::isEmpty, false, "Should return FALSE for list with one item.");
     }
 
-    private static void testSizeMethod(MyList test1, User user) {
+    private static void testSizeMethod() {
+        MyList test1 = new MyList();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        test1.add(user1);
+        test1.add(user2);
+        test1.add(user3);
         // START testing
         check(new MyList(), MyList::size, 0, "Empty list size.");
-        check(test1, MyList::size, 7, "MyList invalid initial size.");
-        test1.remove(user);
-        check(test1, MyList::size, 6, "MyList invalid size after removing.");
+        check(test1, MyList::size, 3, "MyList invalid initial size.");
+        test1.remove(user2);
+        check(test1, MyList::size, 2, "MyList invalid size after removing.");
         test1.add(new User("test user", 22));
-        check(test1, MyList::size, 7, "MyList invalid size after adding an item.");
+        check(test1, MyList::size, 3, "MyList invalid size after adding an item.");
         test1.removeAll(test1);
         check(test1, MyList::size, 0, "MyList invalid size after removing all.");
         // END testing
+    }
+
+
+    private static MyList getData() {
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        User user4 = new User("test", 5);
+        User user5 = new User("Fuck ", 22);
+        User user6 = new User("Rick ", 4);
+        User user7 = new User("Irynka Brusket", 1);
+
+        MyList test1 = new MyList();
+        test1.add(user1);
+        test1.add(user2);
+        test1.add(user3);
+        test1.add(user4);
+        test1.add(user5);
+        test1.add(user6);
+        test1.add(user7);
+        return test1;
+    }
+
+    private static User[] getUsers() {
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        User user4 = new User("test", 5);
+        User user5 = new User("Fuck ", 22);
+        User user6 = new User("Rick ", 4);
+        User user7 = new User("Irynka Brusket", 1);
+        User[] users = new User[7];
+        users[0] = user1;
+        users[1] = user2;
+        users[2] = user3;
+        users[3] = user4;
+        users[4] = user5;
+        users[5] = user6;
+        users[6] = user7;
+        return users;
     }
 }
