@@ -14,6 +14,12 @@ class User {
         this.name = name;
         this.age = age;
     }
+
+    @Override
+    public int hashCode() {
+        return age;
+    }
+
     @Override
     public String toString() {
         return name + " " + age;
@@ -44,8 +50,19 @@ public class Main {
         // testIsEmptyMethod(test1);
         // testContainsMethod(test1, user3, user4);
         // testIteratorMethod(test1);
-        testToArray(test1);
-     }
+        // testToArray(test1);
+        // testAddMethod();
+        // testRemoveMethod(test1, user1,user6);
+        // testIndexOfMethod(test1, user1, user2);
+        // testAddAllMethod();
+        // testClearMethod();
+        //testHashCode();
+        // testRetainAllMethod();
+        // testRemoveAll();
+        // testContainsAll();
+        // testCloneMethod();
+        printTestResults();
+    }
 
 
      public static void checkPerformance() {
@@ -74,12 +91,127 @@ public class Main {
         System.out.println(tests + " tests passed. Failed " + failedMessages.size() + ".");
     }
 
+    private static void testCloneMethod() {
+        MyList original = new MyList();
+        MyList clone = original.clone();
+        if (original.equals(clone)) {
+            failedMessages.add("Clone should return new instance of collection");
+        }
+        tests++;
+
+    }
+
+    private static void testContainsAll() {
+        User one = new User("contains", 1);
+        User two = new User("contains", 2);
+        MyList basic = new MyList();
+        basic.add(new User("some", 11));
+        basic.add(one);
+        basic.add(two);
+        MyList containsCol = new MyList();
+        containsCol.add(one);
+        containsCol.add(two);
+        check(basic, (list) -> list.containsAll(containsCol), true, "Should return true for containing items.");
+        containsCol.add(new User("test user", 33));
+        check(basic, (list) -> list.containsAll(containsCol), false, "Should return false if not contains some.");
+    }
+
+
+    private static void testRemoveAll() {
+        User one = new User("remove", 123);
+        User two = new User("remove2", 123);
+        MyList basic = new MyList();
+        basic.add(new User("sadas", 11));
+        basic.add(one);
+        basic.add(two);
+        MyList removeCol = new MyList();
+        removeCol.add(one);
+        removeCol.add(two);
+        check(basic, (list) -> list.removeAll(removeCol), true, "Should successfully remove all items.");
+        check(basic, MyList::size, 1, "Size should change after removing");
+    }
+
+    private static void testHashCode() {
+        MyList basic = new MyList();
+        basic.add(new User("sad", 2));
+        basic.add(new User("sad", 2));
+        check(basic, MyList::hashCode, 6, "Hash code should be equal to sum for every item's hashcode  + collection length");
+    }
+
+    public static void testRetainAllMethod() {
+        User retain1 = new User("some", 88);
+        User retain2 = new User("else", 12);
+        MyList basic = new MyList();
+        MyList retainCollection = new MyList();
+        basic.add(new User("temove", 22));
+        basic.add(retain1);
+        basic.add(retain2);
+        basic.add(new User("",12));
+        retainCollection.add(retain1);
+        retainCollection.add(retain2);
+        check(basic, (list) -> list.retainAll(retainCollection), true, "Should retain without errors");
+        check(basic, MyList::size, 2, "List size should change after removing items.");
+    }
+
+
+    private static void testClearMethod() {
+        MyList basic = new MyList();
+        basic.add(new User("sad", 2));
+        basic.add(new User("sad", 2));
+        basic.clear();
+        check(basic, MyList::size, 0, "Collection size should be equal to zero after clearing.");
+    }
+
+    private static void testAddAllMethod() {
+        MyList basic = new MyList();
+        MyList toAdd = new MyList();
+        toAdd.add(new User("no nae", 2));
+        toAdd.add(new User("no nae", 2));
+        toAdd.add(new User("no nae", 2));
+        check(basic, (list) -> list.addAll(toAdd), true, "Should add collection without errors.");
+        check(basic, MyList::size, 3, "List size should increase after adding collection of items.");
+        basic.addAll(new MyList());
+        check(basic, MyList::size, 3, "Size should not be changed if adding empty list");
+    }
+
+    private static void testIndexOfMethod(MyList test1, User one, User two) {
+        check(test1, (list) -> list.indexOf(one), 0, "1Should return proper index.");
+        check(test1, (list) -> list.indexOf(two), 1, "2Should return proper index.");
+        check(test1, (list) -> list.indexOf(new User("sadas", 1111)), -1, "Should negative one if no such user in collection.");
+    }
+
+    private static void testRemoveMethod(MyList test1, User one, User two) {
+        int startSize = test1.size();
+        check(test1, (list) -> list.remove(one), true, "Should remove user from collection.");
+        check(test1, MyList::size, startSize - 1, "After remove size should be decreased.");
+        check(test1, (list) -> list.remove(new User("asdsadasdas", 232131)), false, "Should not remove item if it is not exist in collection.");
+        check(test1,MyList::size, startSize - 1, "Size should be the same, if removing item not exist in collection.");
+    }
+
+    private static void testAddMethod() {
+        MyList list1 = new MyList<>();
+        User user1 = new User("asd", 22);
+        check(list1, (list) -> list.add(user1), true, "Should return true for success operation");
+        check(list1, MyList::size, 1, "List size should increase after adding an item");
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        list1.add(new User("New user", 65));
+        check(list1, MyList::size, 13, "Should dynamically change list size when new items are added");
+    }
+
     private static void testToArray(MyList test1) {
         check(test1, (list) -> list.toArray().length, test1.size(), "Returning array size should be equal to collection size");
         check(new MyList(), (list) -> list.toArray().length, 0, "Returning array size should be 0 if empty collection");
 
-
-        printTestResults();
     }
 
     private static void testForEachMethod(MyList collec) {
@@ -97,7 +229,6 @@ public class Main {
             failedMessages.add("Returning type should be instance of Iterator class");
         }
         tests++;
-        printTestResults();
     }
 
     private static void testContainsMethod(MyList col, User one, User two) {
@@ -106,13 +237,11 @@ public class Main {
         check(col, (list) -> list.contains(null), false, "Should return FALSE for null if no null in collection.");
         col.add(null);
         check(col, (list) -> list.contains(null), true, "Should return TRUE for null if null exist in collection.");
-        printTestResults();
     }
 
     private static void testIsEmptyMethod(MyList test) {
         check(new MyList(), MyList::isEmpty, true, "Should return TRUE for empty list.");
         check(test, MyList::isEmpty, false, "Should return FALSE for list with one item.");
-        printTestResults();
     }
 
     private static void testSizeMethod(MyList test1, User user) {
@@ -125,7 +254,6 @@ public class Main {
         check(test1, MyList::size, 7, "MyList invalid size after adding an item.");
         test1.removeAll(test1);
         check(test1, MyList::size, 0, "MyList invalid size after removing all.");
-        printTestResults();
         // END testing
     }
 }

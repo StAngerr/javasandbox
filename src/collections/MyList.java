@@ -55,8 +55,8 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public void forEach(Consumer<? super T> action) {
-        for (Object item: list) {
-            action.accept((T) item);
+        for (int i = 0; i < currentIndex; i++) {
+            action.accept((T)list[i]);
         }
     }
 
@@ -109,13 +109,16 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        c.forEach(item -> add(item));
+        c.forEach(item -> {
+            add(item);
+        });
         return true;
     }
 
     @Override
     public void clear() {
         list = new Object [list.length];
+        currentIndex = 0;
     }
 
     @Override
@@ -126,21 +129,23 @@ public class MyList<T> implements MyListInterface<T> {
     @Override
     public int hashCode() {
         int sum = 0;
-        for(Object item: list) {
-            sum += item.hashCode();
+        for(int i = 0; i < currentIndex; i++) {
+            sum += list[i].hashCode();
         }
-        return sum + list.length;
+        return sum + currentIndex;
     }
 
     @Override
     public boolean retainAll(Collection c) {
-        Object[] result = (T[]) new Object[list.length];
+        Object[] result = (T[]) new Object[c.size()];
         int index = 0;
-        for (Object item : list) {
+        for (Object item : c) {
             if (this.contains(item)) {
                 result[index++] = item;
             }
-        }
+        };
+        list = result;
+        currentIndex = index;
         return true;
     }
 
@@ -157,7 +162,7 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public boolean containsAll(Collection c) {
-        for (Object item : list) {
+        for (Object item: c ) {
             if (!this.contains(item)) {
                 return false;
             }
