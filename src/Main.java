@@ -3,9 +3,7 @@ import collections.MyList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 class User {
     String name;
@@ -29,23 +27,46 @@ public class Main {
     private static int tests = 0;
     private static List<String> failedMessages = new ArrayList<>();
     public static void main(String[] args) {
-        testSizeMethod();
-        testIsEmptyMethod();
-        testContainsMethod();
-        testIteratorMethod();
-        testToArray();
-        testAddMethod();
-        testRemoveMethod();
-        testIndexOfMethod();
-        testAddAllMethod();
-        testClearMethod();
-        testHashCode();
-        testRetainAllMethod();
-        testRemoveAll();
-        testContainsAll();
-        testCloneMethod();
-        printTestResults();
+//        testSizeMethod();
+////        testIsEmptyMethod();
+////        testContainsMethod();
+////        testIteratorMethod();
+////        testToArray();
+////        testAddMethod();
+////        testRemoveMethod();
+////        testIndexOfMethod();
+////        testAddAllMethod();
+////        testClearMethod();
+////        testHashCode();
+////        testRetainAllMethod();
+////        testRemoveAll();
+////        testContainsAll();
+////        testCloneMethod();
+////        printTestResults();
+        testThread();
     }
+
+     public static void testThread() {
+        MyList<User> list =  new MyList<>();
+         User user1 = new User("Rick", 3);
+         User user2 = new User("Tom", 2);
+         User user3 = new User("Jack", 1);
+         MyThread t1 = new MyThread(list, "add", "t1", user1);
+         MyThread t2 = new MyThread(list, "add", "t2", user2);
+         MyThread t4 = new MyThread(list, "delete all", "t4", null);
+         MyThread t5 = new MyThread(list, "remove one", "t5", user1);
+         MyThread t3 = new MyThread(list, "add", "t3", user3);
+         try {
+             t1.t.join();
+             t2.t.join();
+             t3.t.join();
+             t4.t.join();
+             t5.t.join();
+         } catch (InterruptedException e) {
+             e.printStackTrace();
+         }
+         System.out.println("Result: " + list);
+     }
 
 
      public static void checkPerformance() {
@@ -317,5 +338,35 @@ public class Main {
         users[5] = user6;
         users[6] = user7;
         return users;
+    }
+}
+
+class MyThread<T> implements Runnable {
+    Thread t;
+    MyList list;
+    String action;
+    T data;
+    MyThread(MyList list, String action, String name, T data) {
+        t = new Thread(this, name);
+        this.list = list;
+        this.action = action;
+        this.data = data;
+        t.start();
+    }
+
+    @Override
+    public void run() {
+        if (action.equals("add")) {
+            list.add(data);
+
+        } else if (action == "delete all") {
+            System.out.println("Delete all: " + list);
+            for (Object item : list) {
+                list.remove(item);
+            }
+        } else if (action.equals("remove one")) {
+            System.out.println("Remove one: " + list);
+            list.remove(data);
+        }
     }
 }

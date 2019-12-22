@@ -69,13 +69,15 @@ public class MyList<T> implements MyListInterface<T> {
         return (T[]) asAr;
     }
 
-    public boolean add(T o) {
+    public synchronized boolean add(T o) {
         list[currentIndex] = o;
         currentIndex += 1;
         if (list.length - 1 == currentIndex) {
             doubleCollection();
             // expandCollection();
         }
+        System.out.println("Add: " + this);
+
         return true;
     }
 
@@ -86,7 +88,7 @@ public class MyList<T> implements MyListInterface<T> {
 
 
     @Override
-    public boolean remove(Object o) {
+    public synchronized boolean remove(Object o) {
         int index = indexOf(o);
         if (index != -1) {
             for (int i = index; i < list.length - 1; i++) {
@@ -250,7 +252,7 @@ public class MyList<T> implements MyListInterface<T> {
 
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         StringBuilder res = new StringBuilder();
         int i = 0;
         while(i != currentIndex) {
