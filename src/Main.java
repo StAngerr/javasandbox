@@ -43,29 +43,70 @@ public class Main {
 ////        testContainsAll();
 ////        testCloneMethod();
 ////        printTestResults();
-        testThread();
+        // testForEachRemove();
+        testAddALl();
     }
 
-     public static void testThread() {
+    public static void testAddALl() {
+        MyList<User> list =  new MyList<>();
+        User user1 = new User("Rick", 3);
+        User user2 = new User("Tom", 2);
+        User user3 = new User("Jack", 1);
+        User user4 = new User("Jack23", 23);
+        User user5 = new User("Jack22", 22);
+        User user6 = new User("Jack21", 21);
+        list.add(user1);
+        list.add(user2);
+        list.add(user3);
+        list.add(user4);
+        list.add(user5);
+        list.add(user6);
+        MyList<User> newList = new MyList<>();
+         MyThread t1 = new MyThread(newList, "addAll", "t1", list);
+         MyThread t2 = new MyThread(newList, "addAll", "t2", list);
+         MyThread t4 = new MyThread(newList, "addAll", "t4", list);
+        try {
+            t1.t.join();
+            t2.t.join();
+            t4.t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+     public static void testForEachRemove() {
         MyList<User> list =  new MyList<>();
          User user1 = new User("Rick", 3);
          User user2 = new User("Tom", 2);
          User user3 = new User("Jack", 1);
-         MyThread t1 = new MyThread(list, "add", "t1", user1);
-         MyThread t2 = new MyThread(list, "add", "t2", user2);
-         MyThread t4 = new MyThread(list, "delete all", "t4", null);
-         MyThread t5 = new MyThread(list, "remove one", "t5", user1);
-         MyThread t3 = new MyThread(list, "add", "t3", user3);
+         User user4 = new User("Jack23", 23);
+         User user5 = new User("Jack22", 22);
+         User user6 = new User("Jack21", 21);
+         list.add(user1);
+         list.add(user2);
+         list.add(user3);
+         list.add(user4);
+         list.add(user5);
+         list.add(user6);
+         MyThread t2 = new MyThread(list, "forEach", "t2", user1);
+         MyThread t1 = new MyThread(list, "remove one", "t1", user6);
+         MyThread t4 = new MyThread(list, "remove one", "t4", user6);
+         MyThread t3 = new MyThread(list, "remove one", "t3", user6);
+//         MyThread t1 = new MyThread(list, "add", "t1", user1);
+//         MyThread t2 = new MyThread(list, "add", "t2", user2);
+//         MyThread t4 = new MyThread(list, "delete all", "t4", null);
+//         MyThread t5 = new MyThread(list, "remove one", "t5", user1);
+//         MyThread t3 = new MyThread(list, "add", "t3", user3);
          try {
              t1.t.join();
              t2.t.join();
              t3.t.join();
              t4.t.join();
-             t5.t.join();
+//             t5.t.join();
          } catch (InterruptedException e) {
              e.printStackTrace();
          }
-         System.out.println("Result: " + list);
+         // System.out.println("Result: " + list);
      }
 
 
@@ -365,8 +406,24 @@ class MyThread<T> implements Runnable {
                 list.remove(item);
             }
         } else if (action.equals("remove one")) {
-            System.out.println("Remove one: " + list);
+           //  System.out.println("Remove one: " + list);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             list.remove(data);
+        } else if (action.equals("forEach")) {
+           list.forEach(item -> {
+               System.out.println(item);
+               try {
+                   Thread.sleep(500);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           });
+        } else if (action.equals("addAll")) {
+            list.addAll((MyList) data);
         }
     }
 }

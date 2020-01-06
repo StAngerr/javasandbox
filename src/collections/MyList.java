@@ -55,6 +55,7 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public void forEach(Consumer<? super T> action) {
+        System.out.println("For each first " + this.size());
         for (int i = 0; i < currentIndex; i++) {
             action.accept((T)list[i]);
         }
@@ -76,7 +77,7 @@ public class MyList<T> implements MyListInterface<T> {
             doubleCollection();
             // expandCollection();
         }
-        System.out.println("Add: " + this);
+        // System.out.println("Add: " + this);
 
         return true;
     }
@@ -88,14 +89,23 @@ public class MyList<T> implements MyListInterface<T> {
 
 
     @Override
-    public synchronized boolean remove(Object o) {
+    public boolean remove(Object o) {
+        System.out.println("Remove ethods");
         int index = indexOf(o);
         if (index != -1) {
-            for (int i = index; i < list.length - 1; i++) {
-                list[i] = list[i + 1];
+            synchronized(this) {
+                if (indexOf(o) != -1) {
+                    System.out.println("Removing");
+                    for (int i = index; i < list.length - 1; i++) {
+                        list[i] = list[i + 1];
+                    }
+                    currentIndex--;
+                    return true;
+                } else {
+                    System.out.println("Remove inner else");
+                    return false;
+                }
             }
-            currentIndex--;
-            return true;
         }
         return false;
     }
@@ -111,9 +121,12 @@ public class MyList<T> implements MyListInterface<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
+        System.out.println("Enter " + list.length + " " + this.size());
         c.forEach(item -> {
             add(item);
         });
+        System.out.println("Exit" + list.length + " " + this.size());
+
         return true;
     }
 
@@ -138,14 +151,14 @@ public class MyList<T> implements MyListInterface<T> {
     }
 
     @Override
-    public boolean retainAll(Collection c) {
+    public synchronized boolean retainAll(Collection c) {
         Object[] result = (T[]) new Object[c.size()];
         int index = 0;
         for (Object item : c) {
             if (this.contains(item)) {
                 result[index++] = item;
             }
-        };
+        }
         list = result;
         currentIndex = index;
         return true;
@@ -156,7 +169,9 @@ public class MyList<T> implements MyListInterface<T> {
         Collection col = c == this ? this.clone() : c;
         col.forEach(o -> {
             if(this.contains(o)) {
-                remove(o);
+                // synchronized (this) {
+                    remove(o);
+                // }
             }
         });
         return true;
