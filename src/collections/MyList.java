@@ -1,5 +1,6 @@
 package collections;
 
+
 import collections.interfaces.MyListInterface;
 
 import java.lang.reflect.Array;
@@ -7,6 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class MyList<T> implements MyListInterface<T> {
@@ -77,8 +79,6 @@ public class MyList<T> implements MyListInterface<T> {
             doubleCollection();
             // expandCollection();
         }
-        // System.out.println("Add: " + this);
-
         return true;
     }
 
@@ -86,7 +86,6 @@ public class MyList<T> implements MyListInterface<T> {
     public Array getAll() {
         return null;
     }
-
 
     @Override
     public boolean remove(Object o) {
@@ -170,7 +169,7 @@ public class MyList<T> implements MyListInterface<T> {
         col.forEach(o -> {
             if(this.contains(o)) {
                 // synchronized (this) {
-                    remove(o);
+                remove(o);
                 // }
             }
         });
@@ -224,6 +223,25 @@ public class MyList<T> implements MyListInterface<T> {
         return true;
     }
 
+    @Override
+    public T find(Function<T, Boolean> comparator) {
+        for (int i = 0; i < currentIndex; i++) {
+            if (comparator.apply((T) list[i])) {
+                return (T) list[i];
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateByIndex(int idx, T data) {
+        if (idx < currentIndex) {
+            list[idx] = data;
+            return true;
+        }
+        return false;
+    }
+
     public MyList clone(MyList c) {
         MyList newCollection = new MyList();
         c.forEach(item -> newCollection.add(item));
@@ -235,6 +253,7 @@ public class MyList<T> implements MyListInterface<T> {
         this.forEach(item -> newCollection.add(item));
         return newCollection;
     }
+
 
     private void doubleCollection() {
         int currentLength = list.length;
