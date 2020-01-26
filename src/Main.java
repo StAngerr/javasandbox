@@ -27,24 +27,7 @@ public class Main {
     private static int tests = 0;
     private static List<String> failedMessages = new ArrayList<>();
     public static void main(String[] args) {
-//        testSizeMethod();
-////        testIsEmptyMethod();
-////        testContainsMethod();
-////        testIteratorMethod();
-////        testToArray();
-////        testAddMethod();
-////        testRemoveMethod();
-////        testIndexOfMethod();
-////        testAddAllMethod();
-////        testClearMethod();
-////        testHashCode();
-////        testRetainAllMethod();
-////        testRemoveAll();
-////        testContainsAll();
-////        testCloneMethod();
-////        printTestResults();
-        // testForEachRemove();
-        testAddALl();
+        TestFunctions.testFunc();
     }
 
     public static void testAddALl() {

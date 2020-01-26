@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37dcadfd-6150-4b2f-aec8-ed6e74d499ea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Functions/MyChangeFunc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Functions/MyFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFunctions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collections/MyList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collections/MyList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/javasandbox/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/javasandbox/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/javasandbox/collections/MyList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/javasandbox/collections/MyList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +91,14 @@
       <updated>1570887671732</updated>
       <workItem from="1570887675640" duration="1415000" />
     </task>
+    <task id="LOCAL-00001" summary="Updated list">
+      <created>1580065178123</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1580065178123</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,10 +117,42 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated list" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="424" y="4" key="CommitChangelistDialog2" timestamp="1580065176848">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="424" y="4" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1580065176848" />
     <state x="549" y="166" key="FileChooserDialogImpl" timestamp="1580065105742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="166" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1580065105742" />
+    <state width="1493" height="318" key="GridCell.Tab.0.bottom" timestamp="1580067112314">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="318" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1580067112314" />
+    <state width="1493" height="318" key="GridCell.Tab.0.center" timestamp="1580067112314">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="318" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1580067112314" />
+    <state width="1493" height="318" key="GridCell.Tab.0.left" timestamp="1580067112314">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="318" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1580067112314" />
+    <state width="1493" height="318" key="GridCell.Tab.0.right" timestamp="1580067112314">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="318" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1580067112314" />
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2" timestamp="1580065179674">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1580065179674" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1580066525565">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1580066525565" />
   </component>
 </project>
